@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+var mongoose = require('mongoose');
 
-const MovieSchema = new mongoose.Schema({
+var MovieSchema = new mongoose.Schema({
     director: String,
     title: String,
     language: String,
@@ -46,6 +46,6 @@ MovieSchema.statics = {
             .findOne({ _id: id })
             .exec(cb);
     }
-}
+};
 
-module.exports = MovieSchema
+module.exports = MovieSchema;
