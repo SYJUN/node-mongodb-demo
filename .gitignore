@@ -16,6 +16,7 @@ gen/
 local.properties
 node_modules
 bower_components
+/public/libs/
  
 .DS_Store
 Thumbs.db

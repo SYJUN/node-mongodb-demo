@@ -33,7 +33,7 @@ app.use(bodyParser.urlencoded());
 将静态资源文件所在的目录作为参数传递给 express.static 中间件就可以提供静态资源文件的访问了。
 注意：express 4.x版本之后值保留了express.static这个方法，其他方法都分为中间件另外安装引入
 */
-app.use(express.static(path.join(__dirname, 'bower_components')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 
