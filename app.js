@@ -4,7 +4,6 @@ var path = require('path');
 var serveStatic = require('serve-static');
 var bodyParser = require('body-parser');
 var _ = require('lodash');
-// var _ = require('underscore');
 
 var mongoose = require('mongoose');
 var Movie = require('./models/movie');
@@ -164,6 +163,24 @@ app.get('/admin/list', function(req, res) {
         });
     });
 });
+
+// 列表页删除 API
+app.delete('/admin/list', function(req, res) {
+    var id = req.query.id;
+
+    if (id) {
+        Movie.remove({ _id: id }, function(err, movie) {
+            if (err) {
+                console.log(err);
+            } else {
+                res.json({
+                    success: 1
+                });
+            }
+        });
+    }
+});
+
 
 app.listen(port);
 
