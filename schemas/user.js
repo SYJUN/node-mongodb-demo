@@ -5,7 +5,7 @@ var SALT_WORK_FACTOR = 10;
 
 var UserSchema = new mongoose.Schema({
     name: {
-        unique: ture, //唯一的
+        unique: true, //唯一的
         type: String
     },
     password: String,
