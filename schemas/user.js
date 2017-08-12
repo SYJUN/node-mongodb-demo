@@ -20,6 +20,18 @@ var UserSchema = new mongoose.Schema({
         }
     }
 });
+
+// 实例方法
+UserSchema.methods = {
+    comparePassword: function(_password, cb) {
+        bcrypt.compare(_password, this.password, function(err, isMatch) {
+            if (err) console.log(err);
+
+            cb(null, isMatch);
+        })
+    }
+};
+
 // 数据每次存贮之前都要调用此方法
 UserSchema.pre('save', function(next) {
     var user = this;

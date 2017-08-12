@@ -3,15 +3,19 @@ var express = require('express');
 var path = require('path');
 var serveStatic = require('serve-static');
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser')
+var session = require('express-session')
 var _ = require('lodash');
 
 var mongoose = require('mongoose');
+var mongoStore = require('connect-mongo')(session);
 var Movie = require('./models/movie');
 var User = require('./models/user');
+var dbUrl = 'mongodb://127.0.0.1:27017/movies';
 
 // 使用原生 Promise 替换 mongoose 的 Promise
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://127.0.0.1:27017/movies', { useMongoClient: true });
+mongoose.connect(dbUrl, { useMongoClient: true });
 
 // process 全局变量
 var port = process.env.PORT || 3100;
@@ -28,6 +32,18 @@ app.set('views', dir);
 // 设置模板引擎
 app.set('view engine', 'jade');
 
+// 引用存储，用来保存用户登录状态
+app.use(cookieParser());
+app.use(session({
+    secret: 'imooc',
+    resave: false,
+    saveUninitialized: true,
+    store: new mongoStore({
+        url: dbUrl,
+        collection: 'sessions'
+    })
+}));
+
 app.use(bodyParser.urlencoded());
 /*通过 Express 内置的 express.static 可以方便地托管静态文件，例如图片、CSS、JavaScript 文件等。
 将静态资源文件所在的目录作为参数传递给 express.static 中间件就可以提供静态资源文件的访问了。
@@ -39,6 +55,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // 首页
 app.get('/', function(req, res) {
+    console.log('user in session: ')
+    console.log(req.session.user)
     Movie.fetch(function(err, movies) {
         if (err) {
             console.log(err);
@@ -221,6 +239,39 @@ app.get('/admin/userlist', function(req, res) {
         res.render('userlist', {
             title: '用户列表',
             users: users
+        });
+    });
+});
+
+// 登录
+app.post('/user/signin', function(req, res) {
+    var _user = req.body.user;
+    var name = _user.name;
+    var password = _user.password;
+
+    User.findOne({ name: name }, function(err, user) {
+        if (err) {
+            console.log(err);
+        }
+
+        if (!user) {
+            res.redirect('/');
+        }
+
+        user.comparePassword(password, function(err, isMatch) {
+            if (err) {
+                console.log(err);
+            }
+
+            if (isMatch) {
+                // 登录成功
+                console.log('Password is matched')
+                req.session.user = user;
+                return res.redirect('/');
+            } else {
+                console.log('Password is not matched');
+                return res.redirect('/');
+            }
         });
     });
 });
