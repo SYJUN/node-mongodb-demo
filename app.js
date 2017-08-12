@@ -36,8 +36,8 @@ app.set('view engine', 'jade');
 app.use(cookieParser());
 app.use(session({
     secret: 'imooc',
-    resave: false,
-    saveUninitialized: true,
+    // resave: false,
+    // saveUninitialized: true,
     store: new mongoStore({
         url: dbUrl,
         collection: 'sessions'
@@ -52,11 +52,22 @@ app.use(bodyParser.urlencoded());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
+// 会话持久逻辑预处理
+app.use(function(req, res, next) {
+    var _user = req.session.user;
+
+    if (_user) {
+        app.locals.user = _user;
+    }
+
+    return next();
+});
 
 // 首页
 app.get('/', function(req, res) {
     console.log('user in session: ')
     console.log(req.session.user)
+
     Movie.fetch(function(err, movies) {
         if (err) {
             console.log(err);
@@ -275,6 +286,14 @@ app.post('/user/signin', function(req, res) {
         });
     });
 });
+
+// 退出
+app.get('/logout', function(req, res) {
+    delete req.session.user;
+    delete app.locals.user;
+
+    res.redirect('/');
+})
 
 
 app.listen(port);
