@@ -37,7 +37,9 @@ module.exports = function(app) {
     // 退出
     app.get('/logout', User.logout);
     // 用户列表
-    app.get('/admin/userlist', User.userlist);
+    app.get('/admin/user/list', User.signinRequired, User.adminRequired, User.userlist);
+    // 列表页删除 API
+    app.delete('/admin/user/list', User.signinRequired, User.adminRequired, User.userDel);
 
 
     /**
@@ -46,13 +48,13 @@ module.exports = function(app) {
     // 详情页
     app.get('/movie/:id', Movie.detail);
     // 后台录入页
-    app.get('/admin/new', Movie.new);
+    app.get('/admin/movie/new', User.signinRequired, User.adminRequired, Movie.new);
     // 更新电影信息
-    app.get('/admin/update/:id', Movie.update);
+    app.get('/admin/movie/update/:id', User.signinRequired, User.adminRequired, Movie.update);
     // 添加新电影或者保存修改
-    app.post('/admin/movie', Movie.save);
+    app.post('/admin/movie', User.signinRequired, User.adminRequired, Movie.save);
     // 电影列表页
-    app.get('/admin/list', Movie.movielist);
+    app.get('/admin/movie/list', User.signinRequired, User.adminRequired, Movie.movielist);
     // 列表页删除 API
-    app.delete('/admin/list', Movie.del);
+    app.delete('/admin/movie/list', User.signinRequired, User.adminRequired, Movie.del);
 };

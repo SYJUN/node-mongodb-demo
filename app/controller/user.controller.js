@@ -96,3 +96,40 @@ exports.logout = function(req, res) {
 
     res.redirect('/');
 };
+
+// 列表页删除 API
+exports.userDel = function(req, res) {
+    var id = req.query.id;
+
+    if (id) {
+        User.remove({ _id: id }, function(err, movie) {
+            if (err) {
+                console.log(err);
+            } else {
+                res.json({
+                    success: 1
+                });
+            }
+        });
+    }
+};
+
+// 中间件 midware for user - 登录
+exports.signinRequired = function(req, res, next) {
+    var user = req.session.user;
+
+    if (!user) return res.redirect('/signin');
+
+    next();
+}
+
+// 中间件 midware for user - 管理员
+exports.adminRequired = function(req, res, next) {
+    var user = req.session.user;
+
+    if (typeof(user.role) === 'undefined' || user.role === '' || user.role <= 10) {
+        return res.redirect('/signin');
+    }
+
+    next();
+}

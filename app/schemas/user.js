@@ -9,6 +9,19 @@ var UserSchema = new mongoose.Schema({
         type: String
     },
     password: String,
+    /**
+     * 根据规则数值的大小来决定用户的层级，数值越大，层级越高
+     * 0: nomal user(默认用户)
+     * 1: verified user(高级用户)
+     * 2：professonal user
+     * 
+     * >10: admin(管理员)
+     * >50: super admin(超级管理员)
+     */
+    role: {
+        type: Number,
+        default: 0
+    },
     meta: {
         createAt: {
             type: Date,
