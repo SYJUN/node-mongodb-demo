@@ -9,8 +9,9 @@ exports.signup = function(req, res) {
             console.log(err);
         }
 
+        // 如果用户存在，直接跳转到登录页面
         if (user) {
-            return res.redirect('/');
+            return res.redirect('/signin');
         } else {
             var user = new User(_user);
             user.save(function(err, user) {
@@ -20,7 +21,7 @@ exports.signup = function(req, res) {
                 console.log(user)
             });
 
-            res.redirect('/admin/userlist');
+            res.redirect('/');
         }
     });
 };
@@ -51,8 +52,9 @@ exports.signin = function(req, res) {
             console.log(err);
         }
 
+        // 用户不存在，跳转到注册页面
         if (!user) {
-            res.redirect('/');
+            return res.redirect('/signup');
         }
 
         user.comparePassword(password, function(err, isMatch) {
@@ -67,9 +69,23 @@ exports.signin = function(req, res) {
                 return res.redirect('/');
             } else {
                 console.log('Password is not matched');
-                return res.redirect('/');
+                return res.redirect('/signin');
             }
         });
+    });
+};
+
+// 登录跳转页
+exports.showSignin = function(req, res) {
+    res.render('signin', {
+        title: '登录页面'
+    });
+};
+
+// 注册跳转页
+exports.showSignup = function(req, res) {
+    res.render('signup', {
+        title: '注册页面'
     });
 };
 
