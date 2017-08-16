@@ -1,0 +1,2 @@
+{"_id":{"$oid":"599398e14bd4ac3ac964b13b"},"name":"admin","password":"$2a$10$IkhontFpYM2dKuZqLMh.Ce6de6p.AmO/XTh6fu2gwJJEIW5uy4FGO","meta":{"updateAt":{"$date":"2017-08-16T00:59:13.128Z"},"createAt":{"$date":"2017-08-16T00:59:13.128Z"}},"role":51,"__v":0}
+{"_id":{"$oid":"59939da97f604b4156363e39"},"name":"test","password":"$2a$10$r3GAzz7CIMAoFk8X724Yh.UNykv069dzbnkcYmT.aKJVPXV8/F0hK","meta":{"updateAt":{"$date":"2017-08-16T01:19:38.003Z"},"createAt":{"$date":"2017-08-16T01:19:38.003Z"}},"role":0,"__v":0}

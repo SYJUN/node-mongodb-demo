@@ -15,14 +15,14 @@ yarn install
 bower install
 ```
 
-## 导入 dat 格式文件数据到数据库中
+## 导入 dat 格式文件数据到数据库中(以 movies 表为例)
 ```bash
-mongoimport -d movies -c movies /user/mac/document/data/db/data.dat
+mongoimport -d movies -c movies /db/data.dat
 ```
 
-## 导出数据到文件中
+## 导出数据到文件中(以 movies 表为例)
 ```bash
-mongoimport -d movies -c movies -o /user/mac/document/data/db/data.dat
+mongoexport -d movies -c movies -o /db/data.dat
 ```
 
 > 参数说明:
@@ -30,9 +30,29 @@ mongoimport -d movies -c movies -o /user/mac/document/data/db/data.dat
 > - c: 指明要导出的表, 本例中为 `movies`
 > - o: 指明要导出的文件名及目录, 本例中为 `/user/mac/document/data/db/data.dat`
 
-## 启动 
+## 先启动 mongodb 数据库
+
+1. windows 启动(需要将 mongodb 设置成服务)
+
+```bash
+  NET START MongoDB
+```
+
+2. mac 启动
+
+```bash
+// ‘/usr/local/etc/mongod.conf’ 为配置文件路径
+sudo mongod --config /usr/local/etc/mongod.conf
+```
+
+## npm 启动 
 ```bash
 npm start
+```
+
+## grunt 启动
+```bash
+grunt
 ```
 
 在浏览器中打开 `localhost:3100`
