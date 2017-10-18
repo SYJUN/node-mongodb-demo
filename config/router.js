@@ -57,4 +57,12 @@ module.exports = function(app) {
     app.get('/admin/movie/list', User.signinRequired, User.adminRequired, Movie.movielist);
     // 列表页删除 API
     app.delete('/admin/movie/list', User.signinRequired, User.adminRequired, Movie.del);
+
+
+    // 实现 404 页面
+    app.get('*', function(req, res){
+        res.render('404', {
+            title: 'No Found'
+        })
+    });
 };
