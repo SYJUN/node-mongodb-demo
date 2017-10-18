@@ -38,14 +38,25 @@ mongoexport -d movies -c movies -o /db/data.dat
   NET START MongoDB
 ```
 
-2. mac 启动
+2. mac
+
+> 启动
 
 ```bash
-// ‘/usr/local/etc/mongod.conf’ 为配置文件路径
-sudo mongod --config /usr/local/etc/mongod.conf
+// ‘/usr/local/etc/mongod.conf’ 为配置文件路径  --fork 设置为后台执行
+sudo mongod --config /usr/local/etc/mongod.conf --fork
 ```
 
-## npm 启动 
+> 关闭
+
+```
+// 先进入命令控制台,输入 use admin,然后输入 db.shutdownServer()
+$ mongo
+$ use admin
+$ db.shutdownServer()
+```
+
+## npm 启动
 ```bash
 npm start
 ```
