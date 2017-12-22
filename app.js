@@ -35,13 +35,13 @@ app.set('view engine', 'jade');
 // 引用存储，用来保存用户登录状态
 app.use(cookieParser());
 app.use(session({
-    secret: 'imooc',
-    resave: false,
-    saveUninitialized: true,
-    store: new mongoStore({
-        url: dbUrl,
-        collection: 'sessions'
-    })
+  secret: 'imooc',
+  resave: false,
+  saveUninitialized: true,
+  store: new mongoStore({
+    url: dbUrl,
+    collection: 'sessions'
+  })
 }));
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -53,12 +53,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // 如果为开发环境，则做以下配置
 if (app.get('env') === 'development') {
-    app.set('showStackError', true);
-    // app.use(express.logger(':method :url :status'));
-    app.use(morgan(':method :url :status'));
-    // 本地编译后源码格式化显示
-    app.locals.pretty = true;
-    mongoose.set('debug', true);
+  app.set('showStackError', true);
+  // app.use(express.logger(':method :url :status'));
+  app.use(morgan(':method :url :status'));
+  // 本地编译后源码格式化显示
+  app.locals.pretty = true;
+  mongoose.set('debug', true);
 }
 
 require('./config/router')(app);
