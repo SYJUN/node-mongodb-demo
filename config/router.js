@@ -1,6 +1,7 @@
 var Index = require('../app/controller/index.controller');
 var User = require('../app/controller/user.controller');
 var Movie = require('../app/controller/movie.controller');
+var Comment = require('../app/controller/comment.controller');
 // var bodyParser = require('body-parser');
 
 module.exports = function(app) {
@@ -56,7 +57,9 @@ module.exports = function(app) {
   app.get('/admin/movie/list', User.signinRequired, User.adminRequired, Movie.movielist);
   // 列表页删除 API
   app.delete('/admin/movie/list', User.signinRequired, User.adminRequired, Movie.del);
-  
+
+  // Comment
+  app.post("/user/comment", User.signinRequired, Comment.save);
   
   // 实现 404 页面
   app.get('*', function(req, res) {

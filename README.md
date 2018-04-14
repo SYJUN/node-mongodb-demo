@@ -17,12 +17,12 @@ bower install
 
 ## 导入 dat 格式文件数据到数据库中(以 movies 表为例)
 ```bash
-mongoimport -d movies -c movies /db/data.dat
+mongoimport -d movies -c movies ./db/data.dat
 ```
 
 ## 导出数据到文件中(以 movies 表为例)
 ```bash
-mongoexport -d movies -c movies -o /db/data.dat
+mongoexport -d movies -c movies -o ./db/data.dat
 ```
 
 > 参数说明:
